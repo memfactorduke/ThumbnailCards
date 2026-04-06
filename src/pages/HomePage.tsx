@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SEOHead } from "../components/SEOHead";
+import { AdSlot } from "../components/AdSlot";
 import { SITE_URL } from "../config/site";
 
 const FAQ_ITEMS = [
@@ -340,6 +341,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Ad */}
+      <AdSlot slot="homepage-top" className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
+
       {/* How It Works */}
       <section className="bg-surface-50 border-y border-surface-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
@@ -434,6 +438,9 @@ export default function HomePage() {
           })}
         </div>
       </section>
+
+      {/* Ad */}
+      <AdSlot slot="homepage-bottom" className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
 
       {/* FAQ */}
       <section className="bg-surface-50 border-y border-surface-200">
