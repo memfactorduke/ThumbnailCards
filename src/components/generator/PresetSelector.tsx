@@ -8,17 +8,19 @@ interface PresetSelectorProps {
 export function PresetSelector({ activePreset, onSelect }: PresetSelectorProps) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">Preset</label>
+      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+        Preset
+      </label>
       <div className="flex gap-2">
         {PRESETS.map((p) => (
           <button
             key={p.name}
             onClick={() => onSelect(p.name)}
             title={p.description}
-            className={`rounded-lg px-3 py-2 text-sm border transition-colors ${
+            className={`rounded-lg px-3 py-2 text-sm font-medium border transition-all duration-200 ${
               activePreset === p.name
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"
+                : "border-surface-200 text-surface-600 hover:border-surface-300 hover:bg-surface-50"
             }`}
           >
             {p.name}

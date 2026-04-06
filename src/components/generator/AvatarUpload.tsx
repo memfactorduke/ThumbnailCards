@@ -31,17 +31,20 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
 
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">Avatar</label>
+      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+        Avatar
+      </label>
       {avatarUrl ? (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-surface-50 border border-surface-200">
           <img
             src={avatarUrl}
             alt="Avatar preview"
-            className="w-12 h-12 rounded-full object-cover"
+            className="w-10 h-10 rounded-full object-cover ring-2 ring-surface-200"
           />
+          <div className="flex-1 text-sm text-surface-600 truncate">Avatar uploaded</div>
           <button
             onClick={onClear}
-            className="text-sm text-red-500 hover:text-red-700"
+            className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors px-2 py-1 rounded hover:bg-red-50"
           >
             Remove
           </button>
@@ -55,13 +58,16 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
           }}
           onDragLeave={() => setIsDragging(false)}
           onDrop={handleDrop}
-          className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
+          className={`border-2 border-dashed rounded-lg p-5 text-center cursor-pointer transition-all duration-200 ${
             isDragging
-              ? "border-blue-500 bg-blue-50"
-              : "border-gray-300 hover:border-gray-400"
+              ? "border-primary-400 bg-primary-50"
+              : "border-surface-200 hover:border-surface-300 hover:bg-surface-50"
           }`}
         >
-          <p className="text-sm text-gray-500">
+          <svg className="w-8 h-8 mx-auto mb-2 text-surface-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16v-8m0 0l-3 3m3-3l3 3M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2 2 6.477 2 12z" />
+          </svg>
+          <p className="text-sm text-surface-500">
             Drop image or click to upload
           </p>
           <input

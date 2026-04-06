@@ -5,28 +5,34 @@ interface ThemeToggleProps {
   onChange: (theme: ThemeType) => void;
 }
 
-const THEMES: { value: ThemeType; label: string; swatch: string }[] = [
-  { value: "light", label: "Light", swatch: "bg-white border border-gray-300" },
-  { value: "dim", label: "Dim", swatch: "bg-[#15202b]" },
-  { value: "dark", label: "Dark", swatch: "bg-black" },
+const THEMES: { value: ThemeType; label: string; swatch: string; ring: string }[] = [
+  { value: "light", label: "Light", swatch: "bg-white border border-surface-300", ring: "ring-primary-500" },
+  { value: "dim", label: "Dim", swatch: "bg-[#15202b]", ring: "ring-primary-500" },
+  { value: "dark", label: "Dark", swatch: "bg-black", ring: "ring-primary-500" },
 ];
 
 export function ThemeToggle({ theme, onChange }: ThemeToggleProps) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-2">Theme</label>
+      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+        Theme
+      </label>
       <div className="flex gap-2">
         {THEMES.map((t) => (
           <button
             key={t.value}
             onClick={() => onChange(t.value)}
-            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm border transition-colors ${
+            className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border transition-all duration-200 ${
               theme === t.value
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"
+                : "border-surface-200 text-surface-600 hover:border-surface-300 hover:bg-surface-50"
             }`}
           >
-            <div className={`w-5 h-5 rounded-full ${t.swatch}`} />
+            <div
+              className={`w-5 h-5 rounded-full ${t.swatch} ${
+                theme === t.value ? `ring-2 ${t.ring} ring-offset-1` : ""
+              }`}
+            />
             {t.label}
           </button>
         ))}

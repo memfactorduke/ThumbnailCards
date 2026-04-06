@@ -16,10 +16,12 @@ export function SliderControl({
   onChange,
 }: SliderControlProps) {
   return (
-    <div className="flex flex-col gap-1">
-      <div className="flex justify-between text-sm">
-        <span>{label}</span>
-        <span className="text-gray-500">{value}</span>
+    <div className="flex flex-col gap-1.5">
+      <div className="flex justify-between items-center text-sm">
+        <span className="text-surface-600">{label}</span>
+        <span className="text-xs font-mono bg-surface-100 text-surface-600 px-1.5 py-0.5 rounded">
+          {value}
+        </span>
       </div>
       <input
         type="range"
