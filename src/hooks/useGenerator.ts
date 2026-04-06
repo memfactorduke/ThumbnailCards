@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import type { GeneratorConfig, GeneratorMode } from "../types/generator";
 import { getPreset } from "../utils/presets";
 import { randomizeEngagement as randomize } from "../utils/randomize";
+import { getQuickFillData } from "../utils/quickfill";
 
 export function useGenerator() {
   const thumbnailPreset = getPreset("Thumbnail")!;
@@ -38,6 +39,11 @@ export function useGenerator() {
     }));
   }, []);
 
+  const quickFill = useCallback(() => {
+    const data = getQuickFillData();
+    setConfig((prev) => ({ ...prev, ...data }));
+  }, []);
+
   const setAvatar = useCallback((file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -59,6 +65,7 @@ export function useGenerator() {
     applyPreset,
     setMode,
     randomizeEngagement,
+    quickFill,
     setAvatar,
   };
 }

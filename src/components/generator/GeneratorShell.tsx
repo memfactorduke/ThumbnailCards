@@ -13,6 +13,7 @@ interface GeneratorShellProps {
   onRandomizeEngagement: () => void;
   onSetAvatar: (file: File) => void;
   onSetIsPro: (value: boolean) => void;
+  onQuickFill: () => void;
 }
 
 export function GeneratorShell(props: GeneratorShellProps) {

@@ -35,3 +35,12 @@ export async function exportCard(
   });
   triggerDownload(dataUrl, opts.filename ?? "thumbnailcard.png");
 }
+
+export async function copyCardToClipboard(element: HTMLElement): Promise<void> {
+  const dataUrl = await toPng(element, { pixelRatio: 2, cacheBust: true });
+  const response = await fetch(dataUrl);
+  const blob = await response.blob();
+  await navigator.clipboard.write([
+    new ClipboardItem({ "image/png": blob }),
+  ]);
+}

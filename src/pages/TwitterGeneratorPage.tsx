@@ -43,6 +43,7 @@ export default function TwitterGeneratorPage() {
         onRandomizeEngagement={generator.randomizeEngagement}
         onSetAvatar={generator.setAvatar}
         onSetIsPro={generator.setIsPro}
+        onQuickFill={generator.quickFill}
       />
     </div>
   );
