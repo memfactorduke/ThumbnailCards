@@ -2,6 +2,7 @@ import { useRef } from "react";
 import type { GeneratorConfig } from "../../types/generator";
 import { TwitterCard } from "../templates/twitter/TwitterCard";
 import { ExportControls } from "./ExportControls";
+import { ThumbnailPreview } from "./ThumbnailPreview";
 
 interface PreviewPanelProps {
   config: GeneratorConfig;
@@ -33,6 +34,8 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
       </div>
 
       <ExportControls cardRef={cardRef} />
+
+      <ThumbnailPreview config={config} />
     </div>
   );
 }
