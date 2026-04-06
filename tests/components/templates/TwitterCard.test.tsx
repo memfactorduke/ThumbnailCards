@@ -84,4 +84,29 @@ describe("TwitterCard", () => {
     expect(screen.queryByAltText("Avatar")).not.toBeInTheDocument();
     expect(screen.getByTestId("avatar-placeholder")).toBeInTheDocument();
   });
+
+  it("renders verified badge when badge is set", () => {
+    const { container } = render(
+      <TwitterCard config={{ ...testConfig, badge: "blue" }} />
+    );
+    // Badge SVG should be present with the blue fill color
+    const svgs = container.querySelectorAll("svg");
+    const badgeSvg = Array.from(svgs).find((svg) => {
+      const path = svg.querySelector("path");
+      return path?.getAttribute("fill") === "#1d9bf0";
+    });
+    expect(badgeSvg).toBeTruthy();
+  });
+
+  it("does not render badge when badge is none", () => {
+    const { container } = render(
+      <TwitterCard config={{ ...testConfig, badge: "none" }} />
+    );
+    const svgs = container.querySelectorAll("svg");
+    const badgeSvg = Array.from(svgs).find((svg) => {
+      const path = svg.querySelector("path");
+      return path?.getAttribute("fill") === "#1d9bf0";
+    });
+    expect(badgeSvg).toBeFalsy();
+  });
 });

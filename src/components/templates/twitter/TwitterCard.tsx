@@ -78,6 +78,40 @@ function ViewsIcon({ color }: { color: string }) {
   );
 }
 
+function BookmarkIcon({ color }: { color: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      style={{ display: "inline-block", flexShrink: 0 }}
+    >
+      <path
+        d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"
+        fill={color}
+      />
+    </svg>
+  );
+}
+
+function ShareIcon({ color }: { color: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      style={{ display: "inline-block", flexShrink: 0 }}
+    >
+      <path
+        d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"
+        fill={color}
+      />
+    </svg>
+  );
+}
+
 function ThreeDotsIcon({ color }: { color: string }) {
   return (
     <svg
@@ -150,18 +184,6 @@ function VerifiedBadge({ badge }: { badge: GeneratorConfig["badge"] }) {
   return null;
 }
 
-function formatTimestamp(): string {
-  const now = new Date(2026, 3, 5); // April 5, 2026 (month is 0-indexed)
-  const hours = now.getHours();
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  const displayHour = hours % 12 || 12;
-  const month = now.toLocaleString("en-US", { month: "short" });
-  const day = now.getDate();
-  const year = now.getFullYear();
-  return `${displayHour}:${minutes} ${ampm} · ${month} ${day}, ${year}`;
-}
-
 export function TwitterCard({ config }: TwitterCardProps) {
   const theme = THEME_COLORS[config.theme];
   const bgColor = config.cardBgColor || theme.bg;
@@ -182,17 +204,29 @@ export function TwitterCard({ config }: TwitterCardProps) {
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
         boxSizing: "border-box",
+        position: "relative",
       }}
     >
-      {/* Header: avatar + name/handle + 3-dot menu */}
+      {/* Three dots menu — absolutely positioned top-right */}
+      <div
+        style={{
+          position: "absolute",
+          top: `${config.cardPaddingY}px`,
+          right: `${config.cardPaddingX}px`,
+        }}
+      >
+        <ThreeDotsIcon color={secondaryColor} />
+      </div>
+
+      {/* Main layout: avatar left, content right */}
       <div
         style={{
           display: "flex",
-          gap: `${config.avatarGap}px`,
-          marginBottom: "12px",
+          gap: "12px",
           alignItems: "flex-start",
         }}
       >
+        {/* Avatar */}
         {config.avatarUrl ? (
           <img
             src={config.avatarUrl}
@@ -218,8 +252,9 @@ export function TwitterCard({ config }: TwitterCardProps) {
           />
         )}
 
-        {/* Name/handle block */}
+        {/* Content area: name row, tweet text, engagement */}
         <div style={{ minWidth: 0, flex: 1 }}>
+          {/* Name row: name, badge, handle, dot, timestamp */}
           <div
             style={{
               display: "flex",
@@ -251,84 +286,89 @@ export function TwitterCard({ config }: TwitterCardProps) {
                 fontSize: `${config.handleFontSize}px`,
                 color: handleColor,
                 whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
                 lineHeight: 1.2,
               }}
             >
               {config.handle || "@handle"}
             </span>
+            <span
+              style={{
+                fontSize: `${config.handleFontSize}px`,
+                color: secondaryColor,
+                whiteSpace: "nowrap",
+                lineHeight: 1.2,
+                flexShrink: 0,
+              }}
+            >
+              &middot;
+            </span>
+            <span
+              style={{
+                fontSize: `${config.handleFontSize}px`,
+                color: secondaryColor,
+                whiteSpace: "nowrap",
+                lineHeight: 1.2,
+                flexShrink: 0,
+              }}
+            >
+              2h
+            </span>
           </div>
-        </div>
 
-        {/* 3-dot menu */}
-        <div
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            paddingTop: "2px",
-          }}
-        >
-          <ThreeDotsIcon color={secondaryColor} />
+          {/* Tweet text */}
+          <div
+            style={{
+              fontSize: `${config.tweetFontSize}px`,
+              fontWeight: config.tweetFontWeight,
+              lineHeight: config.tweetLineHeight,
+              color: textColor,
+              marginTop: "4px",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-word",
+            }}
+          >
+            {config.tweetText || "Your tweet text here..."}
+          </div>
+
+          {/* Engagement bar */}
+          {config.showEngagement && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "12px",
+                fontSize: `${config.engagementFontSize}px`,
+                color: secondaryColor,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <ReplyIcon color={secondaryColor} />
+                <span>{config.engagement.replies || "0"}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <RetweetIcon color={secondaryColor} />
+                <span>{config.engagement.retweets || "0"}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <LikeIcon color={secondaryColor} />
+                <span>{config.engagement.likes || "0"}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <ViewsIcon color={secondaryColor} />
+                <span>{config.engagement.views || "0"}</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <BookmarkIcon color={secondaryColor} />
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <ShareIcon color={secondaryColor} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Tweet text */}
-      <div
-        style={{
-          fontSize: `${config.tweetFontSize}px`,
-          fontWeight: config.tweetFontWeight,
-          lineHeight: config.tweetLineHeight,
-          color: textColor,
-          marginBottom: "10px",
-          whiteSpace: "pre-wrap",
-          wordBreak: "break-word",
-        }}
-      >
-        {config.tweetText || "Your tweet text here..."}
-      </div>
-
-      {/* Timestamp */}
-      <div
-        style={{
-          fontSize: "14px",
-          color: secondaryColor,
-          marginBottom: config.showEngagement ? "10px" : "0",
-          lineHeight: 1.4,
-        }}
-      >
-        {formatTimestamp()}
-      </div>
-
-      {/* Engagement bar */}
-      {config.showEngagement && (
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            borderTop: `1px solid ${theme.border}`,
-            paddingTop: "10px",
-            fontSize: `${config.engagementFontSize}px`,
-            color: secondaryColor,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <ReplyIcon color={secondaryColor} />
-            <span>{config.engagement.replies || "0"}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <RetweetIcon color={secondaryColor} />
-            <span>{config.engagement.retweets || "0"}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <LikeIcon color={secondaryColor} />
-            <span>{config.engagement.likes || "0"}</span>
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <ViewsIcon color={secondaryColor} />
-            <span>{config.engagement.views || "0"}</span>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
