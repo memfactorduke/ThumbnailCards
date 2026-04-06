@@ -6,7 +6,7 @@ export default function TwitterGeneratorPage() {
   const generator = useGenerator();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-4">
       <SEOHead
         title="Fake Tweet Generator — Create Twitter/X Post Screenshots | ThumbnailCards"
         description="Generate realistic fake tweet screenshots for YouTube thumbnails. Custom text, profile pics, engagement stats, dark mode. Free PNG export, no signup."
@@ -25,9 +25,9 @@ export default function TwitterGeneratorPage() {
           },
         }}
       />
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold">Twitter/X Post Generator</h1>
-        <p className="text-gray-500 text-sm mt-1">
+      <div className="mb-4">
+        <h1 className="text-xl font-bold text-surface-900">Twitter/X Post Generator</h1>
+        <p className="text-surface-500 text-sm">
           Create realistic tweet screenshots for YouTube thumbnails
         </p>
       </div>

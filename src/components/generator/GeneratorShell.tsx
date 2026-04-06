@@ -23,19 +23,21 @@ export function GeneratorShell(props: GeneratorShellProps) {
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-7xl mx-auto">
       {/* Controls column — scrollable */}
       <div className="w-full lg:w-[380px] shrink-0">
-        <div
-          className="bg-white rounded-xl border border-surface-200 shadow-sm overflow-y-auto controls-scroll"
-          style={{ maxHeight: "calc(100vh - 120px)" }}
-        >
-          <div className="p-4">
-            <ControlsPanel {...controlsProps} isPro={isPro} />
+        <div className="lg:sticky lg:top-16">
+          <div
+            className="bg-white rounded-xl border border-surface-200 shadow-sm overflow-y-auto controls-scroll"
+            style={{ maxHeight: "calc(100vh - 100px)" }}
+          >
+            <div className="p-4">
+              <ControlsPanel {...controlsProps} isPro={isPro} />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Preview column — sticky */}
       <div className="flex-1 min-w-0">
-        <div className="lg:sticky lg:top-20">
+        <div className="lg:sticky lg:top-16">
           <div className="flex justify-end mb-3">
             <label className="flex items-center gap-2.5 text-sm font-medium cursor-pointer select-none group">
               <span className="text-surface-600 group-hover:text-surface-800 transition-colors">
