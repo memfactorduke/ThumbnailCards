@@ -23,10 +23,16 @@ export function useGenerator() {
     if (!preset) return;
     setConfig((prev) => ({
       ...preset.config,
+      // Preserve content fields
       displayName: prev.displayName,
       handle: prev.handle,
       tweetText: prev.tweetText,
       avatarUrl: prev.avatarUrl,
+      // Preserve engagement and badge (content, not styling)
+      badge: prev.badge,
+      engagement: prev.engagement,
+      showEngagement: prev.showEngagement,
+      theme: prev.theme,
     }));
     setActivePreset(name);
   }, []);

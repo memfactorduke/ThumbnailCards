@@ -36,6 +36,9 @@ describe("useGenerator", () => {
         displayName: "Keep This",
         handle: "@keepthis",
         tweetText: "Preserve me",
+        badge: "blue" as const,
+        engagement: { replies: "1K", retweets: "2K", likes: "3K", views: "4K" },
+        theme: "dark" as const,
       });
     });
     act(() => {
@@ -44,6 +47,9 @@ describe("useGenerator", () => {
     expect(result.current.config.displayName).toBe("Keep This");
     expect(result.current.config.handle).toBe("@keepthis");
     expect(result.current.config.tweetText).toBe("Preserve me");
+    expect(result.current.config.badge).toBe("blue");
+    expect(result.current.config.engagement.replies).toBe("1K");
+    expect(result.current.config.theme).toBe("dark");
   });
 
   it("toggles mode between default and manual", () => {
