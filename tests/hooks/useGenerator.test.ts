@@ -3,11 +3,12 @@ import { renderHook, act } from "@testing-library/react";
 import { useGenerator } from "../../src/hooks/useGenerator";
 
 describe("useGenerator", () => {
-  it("initializes with Standard preset values", () => {
+  it("initializes with Thumbnail preset values", () => {
     const { result } = renderHook(() => useGenerator());
-    expect(result.current.config.tweetFontSize).toBe(15);
+    expect(result.current.config.tweetFontSize).toBe(28);
     expect(result.current.config.showEngagement).toBe(true);
     expect(result.current.mode).toBe("default");
+    expect(result.current.activePreset).toBe("Thumbnail");
   });
 
   it("updates individual config fields", () => {
@@ -21,11 +22,11 @@ describe("useGenerator", () => {
   it("applies a preset", () => {
     const { result } = renderHook(() => useGenerator());
     act(() => {
-      result.current.applyPreset("Thumbnail Bold");
+      result.current.applyPreset("Standard");
     });
-    expect(result.current.config.tweetFontSize).toBe(28);
-    expect(result.current.config.tweetFontWeight).toBe(700);
-    expect(result.current.activePreset).toBe("Thumbnail Bold");
+    expect(result.current.config.tweetFontSize).toBe(15);
+    expect(result.current.config.tweetFontWeight).toBe(400);
+    expect(result.current.activePreset).toBe("Standard");
   });
 
   it("preserves content fields when applying a preset", () => {
@@ -38,7 +39,7 @@ describe("useGenerator", () => {
       });
     });
     act(() => {
-      result.current.applyPreset("Thumbnail Bold");
+      result.current.applyPreset("Standard");
     });
     expect(result.current.config.displayName).toBe("Keep This");
     expect(result.current.config.handle).toBe("@keepthis");

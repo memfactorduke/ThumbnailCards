@@ -22,11 +22,13 @@ export default function TwitterGeneratorPage() {
         config={generator.config}
         mode={generator.mode}
         activePreset={generator.activePreset}
+        isPro={generator.isPro}
         onUpdateConfig={generator.updateConfig}
         onSetMode={generator.setMode}
         onApplyPreset={generator.applyPreset}
         onRandomizeEngagement={generator.randomizeEngagement}
         onSetAvatar={generator.setAvatar}
+        onSetIsPro={generator.setIsPro}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import type { BadgeType } from "../../types/generator";
 interface BadgeSelectorProps {
   badge: BadgeType;
   onChange: (badge: BadgeType) => void;
+  isPro: boolean;
 }
 
 const BADGES: { value: BadgeType; label: string }[] = [
@@ -12,8 +13,7 @@ const BADGES: { value: BadgeType; label: string }[] = [
   { value: "gov", label: "Gov" },
 ];
 
-export function BadgeSelector({ badge, onChange }: BadgeSelectorProps) {
-  const isPro = false; // Will be wired to auth later
+export function BadgeSelector({ badge, onChange, isPro }: BadgeSelectorProps) {
 
   return (
     <div>

@@ -11,6 +11,7 @@ interface ControlsPanelProps {
   config: GeneratorConfig;
   mode: GeneratorMode;
   activePreset: string;
+  isPro: boolean;
   onUpdateConfig: (partial: Partial<GeneratorConfig>) => void;
   onSetMode: (mode: GeneratorMode) => void;
   onApplyPreset: (name: string) => void;
@@ -22,6 +23,7 @@ export function ControlsPanel({
   config,
   mode,
   activePreset,
+  isPro,
   onUpdateConfig,
   onSetMode,
   onApplyPreset,
@@ -29,7 +31,7 @@ export function ControlsPanel({
   onSetAvatar,
 }: ControlsPanelProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <ModeToggle mode={mode} onChange={onSetMode} />
       <PresetSelector activePreset={activePreset} onSelect={onApplyPreset} />
 
@@ -45,12 +47,12 @@ export function ControlsPanel({
 
       <div>
         <label className="block text-sm font-medium mb-1">Tweet Text</label>
-        <textarea value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder="Type your tweet here..." rows={4} className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm resize-y" />
+        <textarea value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder="Type your tweet here..." rows={3} className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm resize-y" />
       </div>
 
       <AvatarUpload avatarUrl={config.avatarUrl} onUpload={onSetAvatar} onClear={() => onUpdateConfig({ avatarUrl: null })} />
       <ThemeToggle theme={config.theme} onChange={(theme) => onUpdateConfig({ theme })} />
-      <BadgeSelector badge={config.badge} onChange={(badge) => onUpdateConfig({ badge })} />
+      <BadgeSelector badge={config.badge} onChange={(badge) => onUpdateConfig({ badge })} isPro={isPro} />
       <EngagementControls show={config.showEngagement} engagement={config.engagement} onToggle={(show) => onUpdateConfig({ showEngagement: show })} onChange={(engagement) => onUpdateConfig({ engagement })} onRandomize={onRandomizeEngagement} />
 
       {mode === "manual" && (

@@ -5,9 +5,10 @@ import { ExportControls } from "./ExportControls";
 
 interface PreviewPanelProps {
   config: GeneratorConfig;
+  isPro: boolean;
 }
 
-export function PreviewPanel({ config }: PreviewPanelProps) {
+export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -19,9 +20,11 @@ export function PreviewPanel({ config }: PreviewPanelProps) {
           <div ref={cardRef}>
             <TwitterCard config={config} />
           </div>
-          <div className="bg-gray-100 text-gray-400 text-xs text-center py-1 px-3">
-            thumbnailcards.com — Upgrade to Pro to remove
-          </div>
+          {!isPro && (
+            <div className="bg-gray-100 text-gray-400 text-xs text-center py-1 px-3">
+              thumbnailcards.com — Upgrade to Pro to remove
+            </div>
+          )}
         </div>
       </div>
 

@@ -32,12 +32,7 @@ const BASE_CONFIG: GeneratorConfig = {
 
 export const PRESETS: Preset[] = [
   {
-    name: "Standard",
-    description: "Matches real X post styling",
-    config: { ...BASE_CONFIG },
-  },
-  {
-    name: "Thumbnail Bold",
+    name: "Thumbnail",
     description: "Oversized text, heavy weight, larger avatar",
     config: {
       ...BASE_CONFIG,
@@ -50,7 +45,13 @@ export const PRESETS: Preset[] = [
       cardWidth: 550,
       cardPaddingX: 20,
       cardPaddingY: 16,
+      cardBorderRadius: 16,
     },
+  },
+  {
+    name: "Standard",
+    description: "Matches real X post styling",
+    config: { ...BASE_CONFIG },
   },
   {
     name: "Minimal",

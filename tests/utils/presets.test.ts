@@ -6,8 +6,8 @@ describe("presets", () => {
   it("exports three built-in presets", () => {
     expect(PRESETS).toHaveLength(3);
     expect(PRESETS.map((p) => p.name)).toEqual([
+      "Thumbnail",
       "Standard",
-      "Thumbnail Bold",
       "Minimal",
     ]);
   });
@@ -28,8 +28,8 @@ describe("presets", () => {
     expect(preset.config.showEngagement).toBe(true);
   });
 
-  it("Thumbnail Bold preset has oversized text", () => {
-    const preset = getPreset("Thumbnail Bold")!;
+  it("Thumbnail preset has oversized text", () => {
+    const preset = getPreset("Thumbnail")!;
     expect(preset.config.tweetFontSize).toBeGreaterThan(20);
     expect(preset.config.tweetFontWeight).toBeGreaterThanOrEqual(700);
   });

@@ -1,12 +1,14 @@
 import { useState, useCallback } from "react";
 import type { GeneratorConfig, GeneratorMode } from "../types/generator";
-import { BASE_CONFIG, getPreset } from "../utils/presets";
+import { getPreset } from "../utils/presets";
 import { randomizeEngagement as randomize } from "../utils/randomize";
 
 export function useGenerator() {
-  const [config, setConfig] = useState<GeneratorConfig>({ ...BASE_CONFIG });
+  const thumbnailPreset = getPreset("Thumbnail")!;
+  const [config, setConfig] = useState<GeneratorConfig>({ ...thumbnailPreset.config });
   const [mode, setMode] = useState<GeneratorMode>("default");
-  const [activePreset, setActivePreset] = useState<string>("Standard");
+  const [activePreset, setActivePreset] = useState<string>("Thumbnail");
+  const [isPro, setIsPro] = useState<boolean>(true);
 
   const updateConfig = useCallback(
     (partial: Partial<GeneratorConfig>) => {
@@ -51,6 +53,8 @@ export function useGenerator() {
     config,
     mode,
     activePreset,
+    isPro,
+    setIsPro,
     updateConfig,
     applyPreset,
     setMode,
