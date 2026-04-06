@@ -17,11 +17,14 @@ export function ThemeToggle({ theme, onChange }: ThemeToggleProps) {
       <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
         Theme
       </label>
-      <div className="flex gap-2">
+      <div className="flex gap-2" role="radiogroup" aria-label="Theme">
         {THEMES.map((t) => (
           <button
             key={t.value}
             onClick={() => onChange(t.value)}
+            role="radio"
+            aria-checked={theme === t.value}
+            aria-label={`${t.label} theme`}
             className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium border transition-all duration-200 ${
               theme === t.value
                 ? "border-primary-500 bg-primary-50 text-primary-700 shadow-sm"

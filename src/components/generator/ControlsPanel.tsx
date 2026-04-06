@@ -60,24 +60,24 @@ export function ControlsPanel({
       {/* Content inputs */}
       <div className="space-y-3">
         <div>
-          <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
+          <label htmlFor="display-name" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
             Display Name
           </label>
-          <input type="text" value={config.displayName} onChange={(e) => onUpdateConfig({ displayName: e.target.value })} placeholder="Elon Musk" />
+          <input id="display-name" type="text" value={config.displayName} onChange={(e) => onUpdateConfig({ displayName: e.target.value })} placeholder="Elon Musk" />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
+          <label htmlFor="handle" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
             Handle
           </label>
-          <input type="text" value={config.handle} onChange={(e) => onUpdateConfig({ handle: e.target.value })} placeholder="@elonmusk" />
+          <input id="handle" type="text" value={config.handle} onChange={(e) => onUpdateConfig({ handle: e.target.value })} placeholder="@elonmusk" />
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
+          <label htmlFor="tweet-text" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
             Tweet Text
           </label>
-          <textarea value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder="Type your tweet here..." rows={3} className="resize-y" />
+          <textarea id="tweet-text" value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder="Type your tweet here..." rows={3} className="resize-y" />
           <div className={`text-xs mt-1 text-right ${charCountColor}`}>
             {charCount}/280
           </div>

@@ -46,6 +46,7 @@ export function GeneratorShell(props: GeneratorShellProps) {
               <button
                 role="switch"
                 aria-checked={isPro}
+                aria-label="Toggle Pro mode"
                 onClick={() => onSetIsPro(!isPro)}
                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 ${
                   isPro ? "bg-primary-500" : "bg-surface-300"

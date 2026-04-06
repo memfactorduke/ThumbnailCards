@@ -3,24 +3,30 @@ import { exportCard, copyCardToClipboard } from "../../utils/export";
 
 interface ExportControlsProps {
   cardRef: React.RefObject<HTMLDivElement | null>;
+  hasContent: boolean;
 }
 
-export function ExportControls({ cardRef }: ExportControlsProps) {
+export function ExportControls({ cardRef, hasContent }: ExportControlsProps) {
   const [transparent, setTransparent] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [copying, setCopying] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleExport = useCallback(async () => {
     if (!cardRef.current || exporting) return;
     setExporting(true);
+    setError(null);
     try {
       await exportCard(cardRef.current, {
         transparent,
         filename: "thumbnailcard.png",
       });
-    } catch (err) {
-      console.error("Export failed:", err);
+      setDownloaded(true);
+      setTimeout(() => setDownloaded(false), 2000);
+    } catch {
+      setError("Download failed. Please try again.");
     } finally {
       setExporting(false);
     }
@@ -29,12 +35,13 @@ export function ExportControls({ cardRef }: ExportControlsProps) {
   const handleCopy = useCallback(async () => {
     if (!cardRef.current || copying) return;
     setCopying(true);
+    setError(null);
     try {
       await copyCardToClipboard(cardRef.current);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Copy failed:", err);
+    } catch {
+      setError("Copy failed. Please try again.");
     } finally {
       setCopying(false);
     }
@@ -60,19 +67,30 @@ export function ExportControls({ cardRef }: ExportControlsProps) {
       <div className="flex gap-2">
         <button
           onClick={handleExport}
-          disabled={exporting}
-          className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white hover:bg-primary-700 active:bg-primary-800 disabled:opacity-50 transition-all duration-200 shadow-sm hover:shadow-md"
+          disabled={exporting || !hasContent}
+          className={`flex-1 flex items-center justify-center gap-2 rounded-lg bg-primary-600 px-4 py-3 text-sm font-semibold text-white hover:bg-primary-700 active:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md`}
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          {exporting ? "Exporting..." : "Download PNG"}
+          {downloaded ? (
+            <>
+              <svg className="w-4 h-4 text-green-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Downloaded!
+            </>
+          ) : (
+            <>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              {exporting ? "Exporting..." : "Download PNG"}
+            </>
+          )}
         </button>
 
         <button
           onClick={handleCopy}
-          disabled={copying}
-          className="flex items-center justify-center gap-2 rounded-lg bg-surface-100 px-4 py-3 text-sm font-semibold text-surface-700 hover:bg-surface-200 active:bg-surface-300 disabled:opacity-50 transition-all duration-200 shadow-sm hover:shadow-md"
+          disabled={copying || !hasContent}
+          className="flex items-center justify-center gap-2 rounded-lg bg-surface-100 px-4 py-3 text-sm font-semibold text-surface-700 hover:bg-surface-200 active:bg-surface-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md"
         >
           {copied ? (
             <>
@@ -91,6 +109,11 @@ export function ExportControls({ cardRef }: ExportControlsProps) {
           )}
         </button>
       </div>
+
+      {error && <p className="text-sm text-red-500">{error}</p>}
+      {!hasContent && (
+        <p className="text-sm text-surface-400">Add some content first</p>
+      )}
 
       <div className="flex items-center justify-between">
         <label className="text-sm text-surface-600">Transparent Background</label>

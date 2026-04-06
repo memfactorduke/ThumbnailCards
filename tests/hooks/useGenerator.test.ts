@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useGenerator } from "../../src/hooks/useGenerator";
 
@@ -101,5 +101,55 @@ describe("useGenerator", () => {
       "data:image/png;base64,abc123"
     );
     vi.restoreAllMocks();
+  });
+
+  it("initializes isPro from localStorage", () => {
+    const store: Record<string, string> = { "thumbnailcards-pro": "false" };
+    const mockStorage = {
+      getItem: vi.fn((key: string) => store[key] ?? null),
+      setItem: vi.fn((key: string, value: string) => { store[key] = value; }),
+      removeItem: vi.fn((key: string) => { delete store[key]; }),
+      clear: vi.fn(),
+      length: 0,
+      key: vi.fn(),
+    } as unknown as Storage;
+    Object.defineProperty(window, "localStorage", { value: mockStorage, writable: true, configurable: true });
+
+    const { result } = renderHook(() => useGenerator());
+    expect(result.current.isPro).toBe(false);
+  });
+
+  it("persists isPro to localStorage on change", () => {
+    const store: Record<string, string> = {};
+    const mockStorage = {
+      getItem: vi.fn((key: string) => store[key] ?? null),
+      setItem: vi.fn((key: string, value: string) => { store[key] = value; }),
+      removeItem: vi.fn((key: string) => { delete store[key]; }),
+      clear: vi.fn(),
+      length: 0,
+      key: vi.fn(),
+    } as unknown as Storage;
+    Object.defineProperty(window, "localStorage", { value: mockStorage, writable: true, configurable: true });
+
+    const { result } = renderHook(() => useGenerator());
+    act(() => result.current.setIsPro(false));
+    expect(store["thumbnailcards-pro"]).toBe("false");
+    act(() => result.current.setIsPro(true));
+    expect(store["thumbnailcards-pro"]).toBe("true");
+  });
+
+  it("defaults isPro to true when localStorage is empty", () => {
+    const mockStorage = {
+      getItem: vi.fn(() => null),
+      setItem: vi.fn(),
+      removeItem: vi.fn(),
+      clear: vi.fn(),
+      length: 0,
+      key: vi.fn(),
+    } as unknown as Storage;
+    Object.defineProperty(window, "localStorage", { value: mockStorage, writable: true, configurable: true });
+
+    const { result } = renderHook(() => useGenerator());
+    expect(result.current.isPro).toBe(true);
   });
 });

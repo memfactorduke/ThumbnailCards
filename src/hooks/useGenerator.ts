@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { GeneratorConfig, GeneratorMode } from "../types/generator";
 import { getPreset } from "../utils/presets";
 import { randomizeEngagement as randomize } from "../utils/randomize";
@@ -9,7 +9,22 @@ export function useGenerator() {
   const [config, setConfig] = useState<GeneratorConfig>({ ...thumbnailPreset.config });
   const [mode, setMode] = useState<GeneratorMode>("default");
   const [activePreset, setActivePreset] = useState<string>("Thumbnail");
-  const [isPro, setIsPro] = useState<boolean>(true);
+  const [isPro, setIsPro] = useState<boolean>(() => {
+    try {
+      const stored = localStorage.getItem("thumbnailcards-pro");
+      return stored !== null ? stored === "true" : true;
+    } catch {
+      return true;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("thumbnailcards-pro", String(isPro));
+    } catch {
+      // localStorage may be unavailable
+    }
+  }, [isPro]);
 
   const updateConfig = useCallback(
     (partial: Partial<GeneratorConfig>) => {

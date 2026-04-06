@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SEOHead } from "../components/SEOHead";
+import { SITE_URL } from "../config/site";
 
 const FAQ_ITEMS = [
   {
@@ -231,7 +232,7 @@ export default function HomePage() {
         {
           "@type": "WebSite",
           name: "ThumbnailCards",
-          url: "https://thumbnailcards.com",
+          url: SITE_URL,
           description:
             "Free fake social media post generator for YouTube thumbnails",
         },

@@ -27,6 +27,7 @@ export function EngagementControls({
         </label>
         <button
           onClick={() => onToggle(!show)}
+          aria-label="Show engagement stats"
           className={`relative w-10 h-6 rounded-full transition-colors duration-200 ${
             show ? "bg-primary-500" : "bg-surface-300"
           }`}
@@ -48,6 +49,7 @@ export function EngagementControls({
               value={engagement.replies}
               onChange={(e) => updateField("replies", e.target.value)}
               placeholder="0"
+              aria-label="Replies count"
             />
           </div>
           <div className="flex-1">
@@ -57,6 +59,7 @@ export function EngagementControls({
               value={engagement.retweets}
               onChange={(e) => updateField("retweets", e.target.value)}
               placeholder="0"
+              aria-label="Retweets count"
             />
           </div>
           <div className="flex-1">
@@ -66,6 +69,7 @@ export function EngagementControls({
               value={engagement.likes}
               onChange={(e) => updateField("likes", e.target.value)}
               placeholder="0"
+              aria-label="Likes count"
             />
           </div>
           <div className="flex-1">
@@ -75,11 +79,13 @@ export function EngagementControls({
               value={engagement.views}
               onChange={(e) => updateField("views", e.target.value)}
               placeholder="0"
+              aria-label="Views count"
             />
           </div>
           <button
             onClick={onRandomize}
             title="Randomize"
+            aria-label="Randomize engagement"
             className="rounded-lg border border-surface-200 px-2.5 py-2 text-sm hover:bg-surface-50 hover:border-surface-300 transition-all duration-200 text-surface-500"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

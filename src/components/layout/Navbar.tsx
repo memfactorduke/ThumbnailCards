@@ -5,8 +5,11 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.05)] px-6 py-3 sticky top-0 z-50">
+    <nav aria-label="Main navigation" className="bg-white/80 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.05)] px-6 py-3 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary-500 focus:text-white focus:rounded-lg">
+          Skip to content
+        </a>
         <Link
           to="/"
           className="text-lg font-bold tracking-tight text-surface-900 hover:text-primary-600 transition-colors"

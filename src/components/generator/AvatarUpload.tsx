@@ -44,6 +44,7 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
           <div className="flex-1 text-sm text-surface-600 truncate">Avatar uploaded</div>
           <button
             onClick={onClear}
+            aria-label="Remove avatar"
             className="text-xs font-medium text-red-500 hover:text-red-700 transition-colors px-2 py-1 rounded hover:bg-red-50"
           >
             Remove
@@ -51,7 +52,16 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
         </div>
       ) : (
         <div
+          role="button"
+          aria-label="Upload avatar image"
+          tabIndex={0}
           onClick={() => inputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              inputRef.current?.click();
+            }
+          }}
           onDragOver={(e) => {
             e.preventDefault();
             setIsDragging(true);
@@ -74,6 +84,7 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
             ref={inputRef}
             type="file"
             accept="image/*"
+            aria-label="Choose avatar file"
             className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];

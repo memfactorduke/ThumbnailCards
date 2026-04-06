@@ -29,6 +29,9 @@ export function SliderControl({
         max={max}
         step={step}
         value={value}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
         onChange={(e) => onChange(Number(e.target.value))}
         className="w-full"
       />

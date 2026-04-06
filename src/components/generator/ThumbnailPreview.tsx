@@ -68,12 +68,15 @@ export function ThumbnailPreview({ config }: ThumbnailPreviewProps) {
       </div>
 
       {/* Background selector */}
-      <div className="flex gap-1.5 flex-wrap">
+      <div className="flex gap-1.5 flex-wrap" role="radiogroup" aria-label="Thumbnail background">
         {BACKGROUNDS.map((bg, i) => (
           <button
             key={bg.name}
             onClick={() => setBgIndex(i)}
             title={bg.name}
+            role="radio"
+            aria-checked={bgIndex === i}
+            aria-label={`${bg.name} background`}
             className={`w-6 h-6 rounded-full border-2 transition-all ${
               bgIndex === i ? "border-primary-500 scale-110" : "border-surface-200 hover:border-surface-400"
             }`}

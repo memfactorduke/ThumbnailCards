@@ -33,7 +33,7 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
         </div>
       </div>
 
-      <ExportControls cardRef={cardRef} />
+      <ExportControls cardRef={cardRef} hasContent={config.tweetText.trim().length > 0} />
 
       <ThumbnailPreview config={config} />
     </div>
