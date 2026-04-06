@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { SEOHead } from "../components/SEOHead";
-import { AdSlot } from "../components/AdSlot";
 import { SITE_URL } from "../config/site";
 
 const FAQ_ITEMS = [
@@ -9,11 +8,6 @@ const FAQ_ITEMS = [
     question: "Is ThumbnailCards free to use?",
     answer:
       "Yes! The core generator is completely free with no signup required. You can create unlimited tweet-style thumbnail cards, customize them, and export high-resolution PNGs at no cost.",
-  },
-  {
-    question: "What is Pro mode?",
-    answer:
-      "Pro mode unlocks verified badges, removes watermarks, and gives you access to premium templates and additional social media platforms like Truth Social, Threads, and Instagram.",
   },
   {
     question: "What image format does it export?",
@@ -24,11 +18,6 @@ const FAQ_ITEMS = [
     question: "Can I use these for YouTube thumbnails?",
     answer:
       "Absolutely! That's exactly what ThumbnailCards is built for. The oversized text, bold fonts, and 1280\u00d7720 optimization ensure your tweet cards look perfect at thumbnail scale.",
-  },
-  {
-    question: "Will you add other social media platforms?",
-    answer:
-      "Yes! Facebook, Instagram, Threads, and Bluesky generators are on our roadmap. Some will be free, and others will be available as Pro features.",
   },
   {
     question: "Do I need to create an account?",
@@ -113,8 +102,8 @@ const FEATURES = [
         />
       </svg>
     ),
-    title: "Default & Manual Modes",
-    description: "Quick presets or full manual control over every detail.",
+    title: "Full Creative Control",
+    description: "Quick presets or manual control over every pixel.",
   },
   {
     icon: (
@@ -147,23 +136,14 @@ const FEATURES = [
         <path
           strokeLinecap="round"
           strokeLinejoin="round"
-          d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"
+          d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
         />
       </svg>
     ),
-    title: "Pro Features",
+    title: "Verified Badges",
     description:
-      "Verified badges, no watermark, premium templates coming soon.",
+      "Blue, gold, and government badges for maximum realism.",
   },
-];
-
-const PLATFORMS = [
-  { name: "Twitter / X", status: "active" as const, link: "/twitter" },
-  { name: "Facebook", status: "soon" as const },
-  { name: "Truth Social", status: "pro" as const },
-  { name: "Threads", status: "pro" as const },
-  { name: "Instagram", status: "pro" as const },
-  { name: "Bluesky", status: "soon" as const },
 ];
 
 const STEPS = [
@@ -225,6 +205,30 @@ function FAQItem({
   );
 }
 
+function CTAButton({ text = "Start Creating \u2014 Free" }: { text?: string }) {
+  return (
+    <Link
+      to="/twitter"
+      className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-8 py-4 text-white font-semibold text-lg shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-200"
+    >
+      {text}
+      <svg
+        className="w-5 h-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={2}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+        />
+      </svg>
+    </Link>
+  );
+}
+
 export default function HomePage() {
   const jsonLd = useMemo(
     () => ({
@@ -268,45 +272,22 @@ export default function HomePage() {
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-20 pb-24 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-700 mb-8">
             <span className="inline-block w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-            Free to use &mdash; no signup required
+            100% free &mdash; no signup, no watermark
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-surface-900 leading-tight mb-6">
-            Create Stunning Fake Social
-            <br className="hidden sm:block" /> Media Posts for YouTube
-            <br className="hidden sm:block" /> Thumbnails
+            Fake Tweet Screenshots
+            <br className="hidden sm:block" />{" "}
+            <span className="text-primary-600">Built for Thumbnails</span>
           </h1>
           <p className="text-lg sm:text-xl text-surface-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Generate realistic tweet screenshots in seconds. Oversized text,
-            custom styling, transparent PNG export. Free to use, no signup
-            required.
+            Generate realistic Twitter/X post cards with oversized text,
+            verified badges, and transparent PNG export.
+            Perfect for YouTube thumbnails.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/twitter"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-8 py-4 text-white font-semibold text-lg shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-200"
-            >
-              Start Creating &mdash; Free
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                />
-              </svg>
-            </Link>
-            <a
-              href="#features"
-              className="inline-flex items-center justify-center rounded-xl border border-surface-300 bg-white px-8 py-4 font-semibold text-surface-700 text-lg hover:border-surface-400 hover:bg-surface-50 transition-all duration-200"
-            >
-              See Features
-            </a>
-          </div>
+          <CTAButton />
+          <p className="mt-4 text-sm text-surface-400">
+            No account needed. Works in your browser.
+          </p>
         </div>
       </section>
 
@@ -341,9 +322,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Ad */}
-      <AdSlot id={101} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
-
       {/* How It Works */}
       <section className="bg-surface-50 border-y border-surface-200">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
@@ -371,128 +349,60 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+          <div className="text-center mt-14">
+            <CTAButton text="Try It Now \u2014 Free" />
+          </div>
         </div>
       </section>
-
-      {/* Platform Roadmap */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold text-surface-900 mb-4">
-            Platform Roadmap
-          </h2>
-          <p className="text-lg text-surface-500 max-w-2xl mx-auto">
-            We&apos;re building generators for every major social platform.
-            Start with Twitter/X today.
-          </p>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {PLATFORMS.map((platform) => {
-            const isActive = platform.status === "active";
-            const isPro = platform.status === "pro";
-            const inner = (
-              <div
-                className={`rounded-2xl border p-6 text-center transition-all duration-200 ${
-                  isActive
-                    ? "border-primary-200 bg-primary-50 hover:shadow-lg hover:shadow-primary-500/10 cursor-pointer"
-                    : "border-surface-200 bg-white opacity-75"
-                }`}
-              >
-                <h3
-                  className={`text-lg font-semibold mb-1 ${isActive ? "text-primary-700" : "text-surface-600"}`}
-                >
-                  {platform.name}
-                </h3>
-                {isActive && (
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-primary-600">
-                    <svg
-                      className="w-4 h-4"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    Available Now
-                  </span>
-                )}
-                {isPro && (
-                  <span className="inline-block text-sm font-medium text-amber-600 bg-amber-50 px-2.5 py-0.5 rounded-full">
-                    Pro
-                  </span>
-                )}
-                {platform.status === "soon" && (
-                  <span className="text-sm text-surface-400">Coming Soon</span>
-                )}
-              </div>
-            );
-            return isActive ? (
-              <Link key={platform.name} to={platform.link!}>
-                {inner}
-              </Link>
-            ) : (
-              <div key={platform.name}>{inner}</div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Ad */}
-      <AdSlot id={102} className="max-w-5xl mx-auto px-4 sm:px-6 pb-10" />
 
       {/* FAQ */}
-      <section className="bg-surface-50 border-y border-surface-200">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-surface-900 mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-lg text-surface-500">
-              Everything you need to know about ThumbnailCards.
-            </p>
-          </div>
-          <div className="space-y-3">
-            {FAQ_ITEMS.map((item) => (
-              <FAQItem
-                key={item.question}
-                question={item.question}
-                answer={item.answer}
-              />
-            ))}
-          </div>
+      <section className="max-w-3xl mx-auto px-4 sm:px-6 py-20">
+        <div className="text-center mb-14">
+          <h2 className="text-3xl sm:text-4xl font-bold text-surface-900 mb-4">
+            Frequently Asked Questions
+          </h2>
+        </div>
+        <div className="space-y-3">
+          {FAQ_ITEMS.map((item) => (
+            <FAQItem
+              key={item.question}
+              question={item.question}
+              answer={item.answer}
+            />
+          ))}
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
-        <h2 className="text-3xl sm:text-4xl font-bold text-surface-900 mb-4">
-          Ready to create your first thumbnail card?
-        </h2>
-        <p className="text-lg text-surface-500 mb-10 max-w-xl mx-auto">
-          Join thousands of YouTube creators using ThumbnailCards to make
-          scroll-stopping thumbnails.
-        </p>
-        <Link
-          to="/twitter"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary-600 px-10 py-4 text-white font-semibold text-lg shadow-lg shadow-primary-500/25 hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-500/30 transition-all duration-200"
-        >
-          Get Started &mdash; It&apos;s Free
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
+      <section className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-none">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-20 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Ready to make your next thumbnail?
+          </h2>
+          <p className="text-lg text-primary-100 mb-10 max-w-xl mx-auto">
+            Join YouTube creators using ThumbnailCards to make
+            scroll-stopping thumbnails. Free, forever.
+          </p>
+          <Link
+            to="/twitter"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-10 py-4 text-primary-700 font-semibold text-lg shadow-lg hover:bg-primary-50 transition-all duration-200"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-            />
-          </svg>
-        </Link>
+            Get Started Free
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+              />
+            </svg>
+          </Link>
+        </div>
       </section>
     </div>
   );
