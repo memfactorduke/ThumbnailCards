@@ -3,7 +3,6 @@ import type { GeneratorConfig } from "../../types/generator";
 import { TwitterCard } from "../templates/twitter/TwitterCard";
 import { ExportControls } from "./ExportControls";
 import { ThumbnailPreview } from "./ThumbnailPreview";
-import { AdSlot } from "../AdSlot";
 
 interface PreviewPanelProps {
   config: GeneratorConfig;
@@ -35,8 +34,6 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
       </div>
 
       <ExportControls cardRef={cardRef} hasContent={config.tweetText.trim().length > 0} />
-
-      <AdSlot id={103} />
 
       <ThumbnailPreview config={config} />
     </div>
