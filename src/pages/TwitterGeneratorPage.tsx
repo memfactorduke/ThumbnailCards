@@ -10,6 +10,20 @@ export default function TwitterGeneratorPage() {
       <SEOHead
         title="Fake Tweet Generator — Create Twitter/X Post Screenshots | ThumbnailCards"
         description="Generate realistic fake tweet screenshots for YouTube thumbnails. Custom text, profile pics, engagement stats, dark mode. Free PNG export, no signup."
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ThumbnailCards Twitter Post Generator",
+          "description":
+            "Generate realistic fake tweet screenshots for YouTube thumbnails",
+          "applicationCategory": "DesignApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+          },
+        }}
       />
       <div className="mb-8">
         <h1 className="text-2xl font-bold">Twitter/X Post Generator</h1>
