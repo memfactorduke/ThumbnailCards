@@ -36,7 +36,7 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
 
       <ExportControls cardRef={cardRef} hasContent={config.tweetText.trim().length > 0} />
 
-      <AdSlot slot="generator-preview" format="rectangle" />
+      <AdSlot id={103} />
 
       <ThumbnailPreview config={config} />
     </div>
