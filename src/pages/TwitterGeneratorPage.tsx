@@ -1,3 +1,28 @@
+import { useGenerator } from "../hooks/useGenerator";
+import { GeneratorShell } from "../components/generator/GeneratorShell";
+
 export default function TwitterGeneratorPage() {
-  return <div className="p-8"><h1 className="text-2xl font-bold">Twitter/X Generator</h1></div>;
+  const generator = useGenerator();
+
+  return (
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold">Twitter/X Post Generator</h1>
+        <p className="text-gray-500 text-sm mt-1">
+          Create realistic tweet screenshots for YouTube thumbnails
+        </p>
+      </div>
+
+      <GeneratorShell
+        config={generator.config}
+        mode={generator.mode}
+        activePreset={generator.activePreset}
+        onUpdateConfig={generator.updateConfig}
+        onSetMode={generator.setMode}
+        onApplyPreset={generator.applyPreset}
+        onRandomizeEngagement={generator.randomizeEngagement}
+        onSetAvatar={generator.setAvatar}
+      />
+    </div>
+  );
 }
