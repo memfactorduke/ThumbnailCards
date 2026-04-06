@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
+import { SEOHead } from "../components/SEOHead";
 
 export default function HomePage() {
   return (
     <div>
+      <SEOHead
+        title="ThumbnailCards — Fake Social Media Post Generator for YouTube Thumbnails"
+        description="Generate realistic fake tweet screenshots, Facebook posts, and more for YouTube thumbnails. High-res PNG export in seconds. Free, no signup required."
+      />
       {/* Hero */}
       <section className="max-w-4xl mx-auto px-4 py-16 text-center">
         <h1 className="text-4xl font-bold mb-4">
