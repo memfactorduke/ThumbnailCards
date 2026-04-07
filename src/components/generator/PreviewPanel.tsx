@@ -7,10 +7,12 @@ import { ThumbnailPreview } from "./ThumbnailPreview";
 interface PreviewPanelProps {
   config: GeneratorConfig;
   isPro: boolean;
+  CardComponent?: React.ComponentType<{ config: GeneratorConfig }>;
 }
 
-export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
+export function PreviewPanel({ config, isPro, CardComponent }: PreviewPanelProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const Card = CardComponent ?? TwitterCard;
 
   return (
     <div className="space-y-4">
@@ -22,7 +24,7 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
         <div>
           <div className="bg-checkered rounded-lg p-4">
             <div ref={cardRef}>
-              <TwitterCard config={config} />
+              <Card config={config} />
             </div>
           </div>
           {!isPro && (
@@ -35,7 +37,7 @@ export function PreviewPanel({ config, isPro }: PreviewPanelProps) {
 
       <ExportControls cardRef={cardRef} hasContent={config.tweetText.trim().length > 0} />
 
-      <ThumbnailPreview config={config} />
+      <ThumbnailPreview config={config} CardComponent={CardComponent} />
     </div>
   );
 }

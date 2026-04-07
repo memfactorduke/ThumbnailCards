@@ -5,6 +5,7 @@ interface SEOHeadProps {
   description: string;
   ogImage?: string;
   ogUrl?: string;
+  canonicalUrl?: string;
   jsonLd?: Record<string, unknown>;
 }
 
@@ -13,6 +14,7 @@ export function SEOHead({
   description,
   ogImage,
   ogUrl,
+  canonicalUrl,
   jsonLd,
 }: SEOHeadProps) {
   useEffect(() => {
@@ -42,6 +44,18 @@ export function SEOHead({
       tag.content = content;
     };
 
+    const setLink = (rel: string, href: string) => {
+      let tag = document.querySelector(
+        `link[rel="${rel}"]`,
+      ) as HTMLLinkElement | null;
+      if (!tag) {
+        tag = document.createElement("link");
+        tag.setAttribute("rel", rel);
+        document.head.appendChild(tag);
+      }
+      tag.href = href;
+    };
+
     setNameMeta("description", description);
     setMeta("og:title", title);
     setMeta("og:description", description);
@@ -49,7 +63,10 @@ export function SEOHead({
     if (ogUrl) {
       setMeta("og:url", ogUrl);
     }
-  }, [title, description, ogImage, ogUrl]);
+    if (canonicalUrl) {
+      setLink("canonical", canonicalUrl);
+    }
+  }, [title, description, ogImage, ogUrl, canonicalUrl]);
 
   useEffect(() => {
     const existingScript = document.querySelector(

@@ -57,3 +57,35 @@ export interface Preset {
 }
 
 export type GeneratorMode = "default" | "manual";
+
+export interface EngagementField {
+  key: keyof EngagementStats;
+  label: string;
+}
+
+export interface BadgeOption {
+  value: BadgeType;
+  label: string;
+  icon: React.ReactNode;
+}
+
+export interface ThemeOption {
+  value: ThemeType;
+  label: string;
+  swatch: string;
+  ring: string;
+}
+
+export interface PlatformConfig {
+  postLabel: string;
+  charLimit: number | null;
+  handleLabel: string;
+  handlePlaceholder: string;
+  postPlaceholder: string;
+  badges: BadgeOption[];
+  themes: ThemeOption[];
+  engagementFields: EngagementField[];
+  presets: Preset[];
+  CardComponent: React.ComponentType<{ config: GeneratorConfig }>;
+  quickFillData?: () => Partial<GeneratorConfig>;
+}

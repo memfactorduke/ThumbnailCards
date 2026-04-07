@@ -1,4 +1,4 @@
-import type { GeneratorConfig, GeneratorMode } from "../../types/generator";
+import type { GeneratorConfig, GeneratorMode, BadgeOption, ThemeOption, EngagementField, Preset } from "../../types/generator";
 import { ControlsPanel } from "./ControlsPanel";
 import { PreviewPanel } from "./PreviewPanel";
 
@@ -14,10 +14,34 @@ interface GeneratorShellProps {
   onSetAvatar: (file: File) => void;
   onSetIsPro: (value: boolean) => void;
   onQuickFill: () => void;
+  CardComponent?: React.ComponentType<{ config: GeneratorConfig }>;
+  postLabel?: string;
+  charLimit?: number | null;
+  handleLabel?: string;
+  handlePlaceholder?: string;
+  postPlaceholder?: string;
+  badges?: BadgeOption[];
+  themes?: ThemeOption[];
+  engagementFields?: EngagementField[];
+  presets?: Preset[];
 }
 
 export function GeneratorShell(props: GeneratorShellProps) {
-  const { isPro, onSetIsPro, ...controlsProps } = props;
+  const {
+    isPro,
+    onSetIsPro,
+    CardComponent,
+    postLabel,
+    charLimit,
+    handleLabel,
+    handlePlaceholder,
+    postPlaceholder,
+    badges,
+    themes,
+    engagementFields,
+    presets,
+    ...controlsProps
+  } = props;
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 max-w-7xl mx-auto">
@@ -29,7 +53,19 @@ export function GeneratorShell(props: GeneratorShellProps) {
             style={{ maxHeight: "calc(100vh - 100px)" }}
           >
             <div className="p-4">
-              <ControlsPanel {...controlsProps} isPro={isPro} />
+              <ControlsPanel
+                {...controlsProps}
+                isPro={isPro}
+                postLabel={postLabel}
+                charLimit={charLimit}
+                handleLabel={handleLabel}
+                handlePlaceholder={handlePlaceholder}
+                postPlaceholder={postPlaceholder}
+                badges={badges}
+                themes={themes}
+                engagementFields={engagementFields}
+                presets={presets}
+              />
             </div>
           </div>
         </div>
@@ -60,7 +96,7 @@ export function GeneratorShell(props: GeneratorShellProps) {
               </button>
             </label>
           </div>
-          <PreviewPanel config={props.config} isPro={isPro} />
+          <PreviewPanel config={props.config} isPro={isPro} CardComponent={CardComponent} />
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import type { ThemeType } from "../../types/generator";
 interface ThemeToggleProps {
   theme: ThemeType;
   onChange: (theme: ThemeType) => void;
+  themes?: { value: ThemeType; label: string; swatch: string; ring: string }[];
 }
 
 const THEMES: { value: ThemeType; label: string; swatch: string; ring: string }[] = [
@@ -11,14 +12,15 @@ const THEMES: { value: ThemeType; label: string; swatch: string; ring: string }[
   { value: "dark", label: "Dark", swatch: "bg-black", ring: "ring-primary-500" },
 ];
 
-export function ThemeToggle({ theme, onChange }: ThemeToggleProps) {
+export function ThemeToggle({ theme, onChange, themes }: ThemeToggleProps) {
+  const items = themes ?? THEMES;
   return (
     <div>
-      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+      <label className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-2">
         Theme
       </label>
       <div className="flex gap-2" role="radiogroup" aria-label="Theme">
-        {THEMES.map((t) => (
+        {items.map((t) => (
           <button
             key={t.value}
             onClick={() => onChange(t.value)}

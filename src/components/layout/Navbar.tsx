@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+const GENERATORS = [
+  { name: "Twitter/X", path: "/twitter" },
+  { name: "Facebook", path: "/facebook" },
+  { name: "Instagram", path: "/instagram" },
+  { name: "Threads", path: "/threads" },
+  { name: "Bluesky", path: "/bluesky" },
+  { name: "Truth Social", path: "/truth-social" },
+];
+
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -18,12 +27,15 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex gap-1 items-center">
-          <Link
-            to="/twitter"
-            className="text-sm font-medium text-surface-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
-          >
-            Twitter/X
-          </Link>
+          {GENERATORS.map((g) => (
+            <Link
+              key={g.path}
+              to={g.path}
+              className="text-sm font-medium text-surface-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
+            >
+              {g.name}
+            </Link>
+          ))}
         </div>
 
         <button
@@ -45,13 +57,16 @@ export function Navbar() {
 
       {menuOpen && (
         <div className="md:hidden mt-2 pt-2 border-t border-surface-100 space-y-1">
-          <Link
-            to="/twitter"
-            className="block text-sm font-medium text-surface-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
-            onClick={() => setMenuOpen(false)}
-          >
-            Twitter/X Generator
-          </Link>
+          {GENERATORS.map((g) => (
+            <Link
+              key={g.path}
+              to={g.path}
+              className="block text-sm font-medium text-surface-600 hover:text-primary-600 px-3 py-2 rounded-lg hover:bg-primary-50 transition-all"
+              onClick={() => setMenuOpen(false)}
+            >
+              {g.name} Generator
+            </Link>
+          ))}
         </div>
       )}
     </nav>

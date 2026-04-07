@@ -31,7 +31,7 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
 
   return (
     <div>
-      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+      <label className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-2">
         Avatar
       </label>
       {avatarUrl ? (
@@ -77,7 +77,7 @@ export function AvatarUpload({ avatarUrl, onUpload, onClear }: AvatarUploadProps
           <svg className="w-8 h-8 mx-auto mb-2 text-surface-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 16v-8m0 0l-3 3m3-3l3 3M2 12c0 5.523 4.477 10 10 10s10-4.477 10-10S17.523 2 12 2 2 6.477 2 12z" />
           </svg>
-          <p className="text-sm text-surface-500">
+          <p className="text-sm text-surface-600">
             Drop image or click to upload
           </p>
           <input

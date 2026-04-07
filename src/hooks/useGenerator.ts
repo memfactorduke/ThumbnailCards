@@ -1,14 +1,23 @@
 import { useState, useCallback, useEffect } from "react";
-import type { GeneratorConfig, GeneratorMode } from "../types/generator";
-import { getPreset } from "../utils/presets";
+import type { GeneratorConfig, GeneratorMode, Preset } from "../types/generator";
+import { getPreset, PRESETS } from "../utils/presets";
 import { randomizeEngagement as randomize } from "../utils/randomize";
 import { getQuickFillData } from "../utils/quickfill";
 
-export function useGenerator() {
-  const thumbnailPreset = getPreset("Thumbnail")!;
-  const [config, setConfig] = useState<GeneratorConfig>({ ...thumbnailPreset.config });
+export interface UseGeneratorOptions {
+  initialConfig?: GeneratorConfig;
+  presets?: Preset[];
+  quickFillFn?: () => Partial<GeneratorConfig>;
+}
+
+export function useGenerator(options?: UseGeneratorOptions) {
+  const presets = options?.presets ?? PRESETS;
+  const initialConfig = options?.initialConfig ?? getPreset("Thumbnail")!.config;
+  const quickFillFn = options?.quickFillFn ?? getQuickFillData;
+
+  const [config, setConfig] = useState<GeneratorConfig>({ ...initialConfig });
   const [mode, setMode] = useState<GeneratorMode>("default");
-  const [activePreset, setActivePreset] = useState<string>("Thumbnail");
+  const [activePreset, setActivePreset] = useState<string>(presets[0]?.name ?? "Thumbnail");
   const [isPro, setIsPro] = useState<boolean>(() => {
     try {
       const stored = localStorage.getItem("thumbnailcards-pro");
@@ -34,7 +43,7 @@ export function useGenerator() {
   );
 
   const applyPreset = useCallback((name: string) => {
-    const preset = getPreset(name);
+    const preset = presets.find((p) => p.name === name);
     if (!preset) return;
     setConfig((prev) => ({
       ...preset.config,
@@ -50,7 +59,7 @@ export function useGenerator() {
       theme: prev.theme,
     }));
     setActivePreset(name);
-  }, []);
+  }, [presets]);
 
   const randomizeEngagement = useCallback(() => {
     const stats = randomize();
@@ -61,9 +70,9 @@ export function useGenerator() {
   }, []);
 
   const quickFill = useCallback(() => {
-    const data = getQuickFillData();
+    const data = quickFillFn();
     setConfig((prev) => ({ ...prev, ...data }));
-  }, []);
+  }, [quickFillFn]);
 
   const setAvatar = useCallback((file: File) => {
     const reader = new FileReader();

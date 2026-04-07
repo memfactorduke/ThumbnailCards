@@ -4,6 +4,7 @@ interface BadgeSelectorProps {
   badge: BadgeType;
   onChange: (badge: BadgeType) => void;
   isPro: boolean;
+  badges?: { value: BadgeType; label: string; icon: React.ReactNode }[];
 }
 
 const BADGE_ARIA_LABELS: Record<BadgeType, string> = {
@@ -52,11 +53,12 @@ const BADGES: { value: BadgeType; label: string; icon: React.ReactNode }[] = [
   },
 ];
 
-export function BadgeSelector({ badge, onChange, isPro }: BadgeSelectorProps) {
+export function BadgeSelector({ badge, onChange, isPro, badges }: BadgeSelectorProps) {
+  const items = badges ?? BADGES;
 
   return (
     <div>
-      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+      <label className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-2">
         Verified Badge{" "}
         {!isPro && (
           <span className="normal-case tracking-normal text-primary-400 font-medium ml-1">
@@ -65,7 +67,7 @@ export function BadgeSelector({ badge, onChange, isPro }: BadgeSelectorProps) {
         )}
       </label>
       <div className="flex gap-2" role="radiogroup" aria-label="Verification badge">
-        {BADGES.map((b) => (
+        {items.map((b) => (
           <button
             key={b.value}
             onClick={() => isPro || b.value === "none" ? onChange(b.value) : undefined}

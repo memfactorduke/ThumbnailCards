@@ -7,7 +7,7 @@ const FAQ_ITEMS = [
   {
     question: "Is ThumbnailCards free to use?",
     answer:
-      "Yes! The core generator is completely free with no signup required. You can create unlimited tweet-style thumbnail cards, customize them, and export high-resolution PNGs at no cost.",
+      "Yes! All generators are completely free with no signup required. You can create unlimited social media thumbnail cards, customize them, and export high-resolution PNGs at no cost.",
   },
   {
     question: "What image format does it export?",
@@ -17,7 +17,7 @@ const FAQ_ITEMS = [
   {
     question: "Can I use these for YouTube thumbnails?",
     answer:
-      "Absolutely! That's exactly what ThumbnailCards is built for. The oversized text, bold fonts, and 1280\u00d7720 optimization ensure your tweet cards look perfect at thumbnail scale.",
+      "Absolutely! That's exactly what ThumbnailCards is built for. Generate cards for Twitter/X, Facebook, Instagram, Threads, Bluesky, and Truth Social — all with oversized text, bold fonts, and 1280\u00d7720 optimization so they look perfect at thumbnail scale.",
   },
   {
     question: "Do I need to create an account?",
@@ -205,6 +205,15 @@ function FAQItem({
   );
 }
 
+const PLATFORMS = [
+  { name: "Twitter/X", path: "/twitter", color: "#1d9bf0", description: "Tweet screenshots" },
+  { name: "Facebook", path: "/facebook", color: "#1877f2", description: "Facebook post cards" },
+  { name: "Instagram", path: "/instagram", color: "#e1306c", description: "Instagram post cards" },
+  { name: "Threads", path: "/threads", color: "#000000", description: "Threads post cards" },
+  { name: "Bluesky", path: "/bluesky", color: "#0085ff", description: "Bluesky post cards" },
+  { name: "Truth Social", path: "/truth-social", color: "#4c6ef5", description: "Truth Social cards" },
+];
+
 function CTAButton({ text = "Start Creating \u2014 Free" }: { text?: string }) {
   return (
     <Link
@@ -239,7 +248,7 @@ export default function HomePage() {
           name: "ThumbnailCards",
           url: SITE_URL,
           description:
-            "Free fake social media post generator for YouTube thumbnails",
+            "Free fake social media post generator for YouTube thumbnails — Twitter, Facebook, Instagram, Threads, Bluesky, Truth Social",
         },
         {
           "@type": "FAQPage",
@@ -261,7 +270,9 @@ export default function HomePage() {
     <div className="scroll-smooth">
       <SEOHead
         title="ThumbnailCards — Fake Social Media Post Generator for YouTube Thumbnails"
-        description="Generate realistic fake tweet screenshots, Facebook posts, and more for YouTube thumbnails. High-res PNG export in seconds. Free, no signup required."
+        description="Generate realistic fake social media posts — Twitter/X, Facebook, Instagram, Threads, Bluesky, Truth Social — for YouTube thumbnails. High-res PNG export in seconds. Free, no signup required."
+        canonicalUrl={SITE_URL}
+        ogUrl={SITE_URL}
         jsonLd={jsonLd}
       />
 
@@ -275,17 +286,32 @@ export default function HomePage() {
             100% free &mdash; no signup, no watermark
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-surface-900 leading-tight mb-6">
-            Fake Tweet Screenshots
+            Fake Social Media Posts
             <br className="hidden sm:block" />{" "}
             <span className="text-primary-600">Built for Thumbnails</span>
           </h1>
           <p className="text-lg sm:text-xl text-surface-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Generate realistic Twitter/X post cards with oversized text,
+            Generate realistic social media post cards with oversized text,
             verified badges, and transparent PNG export.
             Perfect for YouTube thumbnails.
           </p>
-          <CTAButton />
-          <p className="mt-4 text-sm text-surface-400">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-10">
+            {PLATFORMS.map((p) => (
+              <Link
+                key={p.path}
+                to={p.path}
+                className="group flex flex-col items-center gap-2 rounded-xl border border-surface-200 bg-white px-4 py-4 transition-all duration-200 hover:border-surface-300 hover:shadow-lg hover:shadow-surface-200/50 hover:-translate-y-0.5"
+              >
+                <div
+                  className="w-3 h-3 rounded-full transition-transform group-hover:scale-125"
+                  style={{ backgroundColor: p.color }}
+                />
+                <span className="text-sm font-semibold text-surface-800">{p.name}</span>
+                <span className="text-xs text-surface-400">{p.description}</span>
+              </Link>
+            ))}
+          </div>
+          <p className="text-sm text-surface-400">
             No account needed. Works in your browser.
           </p>
         </div>

@@ -4,6 +4,7 @@ import { TwitterCard } from "../templates/twitter/TwitterCard";
 
 interface ThumbnailPreviewProps {
   config: GeneratorConfig;
+  CardComponent?: React.ComponentType<{ config: GeneratorConfig }>;
 }
 
 const BACKGROUNDS = [
@@ -15,9 +16,10 @@ const BACKGROUNDS = [
   { name: "Clean White", bg: "#f8fafc" },
 ];
 
-export function ThumbnailPreview({ config }: ThumbnailPreviewProps) {
+export function ThumbnailPreview({ config, CardComponent }: ThumbnailPreviewProps) {
   const [bgIndex, setBgIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const Card = CardComponent ?? TwitterCard;
 
   if (!isOpen) {
     return (
@@ -62,7 +64,7 @@ export function ThumbnailPreview({ config }: ThumbnailPreviewProps) {
           }}
         >
           <div style={{ transform: "scale(0.55)", transformOrigin: "center" }}>
-            <TwitterCard config={config} />
+            <Card config={config} />
           </div>
         </div>
       </div>

@@ -1,4 +1,11 @@
-import type { EngagementStats } from "../../types/generator";
+import type { EngagementStats, EngagementField } from "../../types/generator";
+
+const DEFAULT_FIELDS: EngagementField[] = [
+  { key: "replies", label: "Replies" },
+  { key: "retweets", label: "Retweets" },
+  { key: "likes", label: "Likes" },
+  { key: "views", label: "Views" },
+];
 
 interface EngagementControlsProps {
   show: boolean;
@@ -6,6 +13,7 @@ interface EngagementControlsProps {
   onToggle: (show: boolean) => void;
   onChange: (engagement: EngagementStats) => void;
   onRandomize: () => void;
+  fields?: EngagementField[];
 }
 
 export function EngagementControls({
@@ -14,7 +22,10 @@ export function EngagementControls({
   onToggle,
   onChange,
   onRandomize,
+  fields,
 }: EngagementControlsProps) {
+  const items = fields ?? DEFAULT_FIELDS;
+
   const updateField = (field: keyof EngagementStats, value: string) => {
     onChange({ ...engagement, [field]: value });
   };
@@ -22,7 +33,7 @@ export function EngagementControls({
   return (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <label className="text-xs font-semibold text-surface-500 uppercase tracking-wider">
+        <label className="text-xs font-semibold text-surface-600 uppercase tracking-wider">
           Engagement Bar
         </label>
         <button
@@ -42,46 +53,18 @@ export function EngagementControls({
 
       {show && (
         <div className="flex gap-2 items-end">
-          <div className="flex-1">
-            <label className="block text-xs text-surface-400 mb-1">Replies</label>
-            <input
-              type="text"
-              value={engagement.replies}
-              onChange={(e) => updateField("replies", e.target.value)}
-              placeholder="0"
-              aria-label="Replies count"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs text-surface-400 mb-1">Retweets</label>
-            <input
-              type="text"
-              value={engagement.retweets}
-              onChange={(e) => updateField("retweets", e.target.value)}
-              placeholder="0"
-              aria-label="Retweets count"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs text-surface-400 mb-1">Likes</label>
-            <input
-              type="text"
-              value={engagement.likes}
-              onChange={(e) => updateField("likes", e.target.value)}
-              placeholder="0"
-              aria-label="Likes count"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs text-surface-400 mb-1">Views</label>
-            <input
-              type="text"
-              value={engagement.views}
-              onChange={(e) => updateField("views", e.target.value)}
-              placeholder="0"
-              aria-label="Views count"
-            />
-          </div>
+          {items.map((field) => (
+            <div key={field.key} className="flex-1">
+              <label className="block text-xs text-surface-400 mb-1">{field.label}</label>
+              <input
+                type="text"
+                value={engagement[field.key]}
+                onChange={(e) => updateField(field.key, e.target.value)}
+                placeholder="0"
+                aria-label={`${field.label} count`}
+              />
+            </div>
+          ))}
           <button
             onClick={onRandomize}
             title="Randomize"

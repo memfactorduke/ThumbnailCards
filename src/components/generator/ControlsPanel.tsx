@@ -1,5 +1,4 @@
-import type { GeneratorConfig, GeneratorMode } from "../../types/generator";
-import { ModeToggle } from "./ModeToggle";
+import type { GeneratorConfig, GeneratorMode, BadgeOption, ThemeOption, EngagementField, Preset } from "../../types/generator";
 import { ThemeToggle } from "./ThemeToggle";
 import { BadgeSelector } from "./BadgeSelector";
 import { PresetSelector } from "./PresetSelector";
@@ -18,31 +17,47 @@ interface ControlsPanelProps {
   onRandomizeEngagement: () => void;
   onSetAvatar: (file: File) => void;
   onQuickFill: () => void;
+  postLabel?: string;
+  charLimit?: number | null;
+  handleLabel?: string;
+  handlePlaceholder?: string;
+  postPlaceholder?: string;
+  badges?: BadgeOption[];
+  themes?: ThemeOption[];
+  engagementFields?: EngagementField[];
+  presets?: Preset[];
 }
 
 export function ControlsPanel({
   config,
-  mode,
   activePreset,
   isPro,
   onUpdateConfig,
-  onSetMode,
   onApplyPreset,
   onRandomizeEngagement,
   onSetAvatar,
   onQuickFill,
+  postLabel,
+  charLimit,
+  handleLabel,
+  handlePlaceholder,
+  postPlaceholder,
+  badges,
+  themes,
+  engagementFields,
+  presets,
 }: ControlsPanelProps) {
+  const effectiveCharLimit = charLimit === undefined ? 280 : charLimit;
   const charCount = config.tweetText.length;
   const charCountColor =
-    charCount > 280
+    effectiveCharLimit !== null && charCount > effectiveCharLimit
       ? "text-red-500"
-      : charCount >= 260
+      : effectiveCharLimit !== null && charCount >= effectiveCharLimit - 20
         ? "text-amber-500"
         : "text-surface-400";
   return (
     <div className="space-y-3">
-      <ModeToggle mode={mode} onChange={onSetMode} />
-      <PresetSelector activePreset={activePreset} onSelect={onApplyPreset} />
+      <PresetSelector activePreset={activePreset} onSelect={onApplyPreset} presets={presets} />
 
       <button
         onClick={onQuickFill}
@@ -60,27 +75,29 @@ export function ControlsPanel({
       {/* Content inputs */}
       <div className="space-y-3">
         <div>
-          <label htmlFor="display-name" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
+          <label htmlFor="display-name" className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-1.5">
             Display Name
           </label>
           <input id="display-name" type="text" value={config.displayName} onChange={(e) => onUpdateConfig({ displayName: e.target.value })} placeholder="Elon Musk" />
         </div>
 
         <div>
-          <label htmlFor="handle" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
-            Handle
+          <label htmlFor="handle" className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-1.5">
+            {handleLabel ?? "Handle"}
           </label>
-          <input id="handle" type="text" value={config.handle} onChange={(e) => onUpdateConfig({ handle: e.target.value })} placeholder="@elonmusk" />
+          <input id="handle" type="text" value={config.handle} onChange={(e) => onUpdateConfig({ handle: e.target.value })} placeholder={handlePlaceholder ?? "@elonmusk"} />
         </div>
 
         <div>
-          <label htmlFor="tweet-text" className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1.5">
-            Tweet Text
+          <label htmlFor="tweet-text" className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-1.5">
+            {postLabel ?? "Tweet Text"}
           </label>
-          <textarea id="tweet-text" value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder="Type your tweet here..." rows={3} className="resize-y" />
-          <div className={`text-xs mt-1 text-right ${charCountColor}`}>
-            {charCount}/280
-          </div>
+          <textarea id="tweet-text" value={config.tweetText} onChange={(e) => onUpdateConfig({ tweetText: e.target.value })} placeholder={postPlaceholder ?? "Type your tweet here..."} rows={3} className="resize-y" />
+          {effectiveCharLimit !== null && (
+            <div className={`text-xs mt-1 text-right ${charCountColor}`}>
+              {charCount}/{effectiveCharLimit}
+            </div>
+          )}
         </div>
       </div>
 
@@ -89,21 +106,18 @@ export function ControlsPanel({
 
       {/* Appearance */}
       <AvatarUpload avatarUrl={config.avatarUrl} onUpload={onSetAvatar} onClear={() => onUpdateConfig({ avatarUrl: null })} />
-      <ThemeToggle theme={config.theme} onChange={(theme) => onUpdateConfig({ theme })} />
-      <BadgeSelector badge={config.badge} onChange={(badge) => onUpdateConfig({ badge })} isPro={isPro} />
+      <ThemeToggle theme={config.theme} onChange={(theme) => onUpdateConfig({ theme })} themes={themes} />
+      <BadgeSelector badge={config.badge} onChange={(badge) => onUpdateConfig({ badge })} isPro={isPro} badges={badges} />
 
       {/* Divider */}
       <div className="border-t border-surface-100" />
 
       {/* Engagement */}
-      <EngagementControls show={config.showEngagement} engagement={config.engagement} onToggle={(show) => onUpdateConfig({ showEngagement: show })} onChange={(engagement) => onUpdateConfig({ engagement })} onRandomize={onRandomizeEngagement} />
+      <EngagementControls show={config.showEngagement} engagement={config.engagement} onToggle={(show) => onUpdateConfig({ showEngagement: show })} onChange={(engagement) => onUpdateConfig({ engagement })} onRandomize={onRandomizeEngagement} fields={engagementFields} />
 
-      {mode === "manual" && (
-        <>
-          <div className="border-t border-surface-100" />
-          <ManualControls config={config} onChange={onUpdateConfig} />
-        </>
-      )}
+      {/* Fine-tune sliders — always available */}
+      <div className="border-t border-surface-100" />
+      <ManualControls config={config} onChange={onUpdateConfig} />
     </div>
   );
 }

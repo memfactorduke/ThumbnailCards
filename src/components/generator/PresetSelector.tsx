@@ -1,18 +1,21 @@
-import { PRESETS } from "../../utils/presets";
+import type { Preset } from "../../types/generator";
+import { PRESETS as DEFAULT_PRESETS } from "../../utils/presets";
 
 interface PresetSelectorProps {
   activePreset: string;
   onSelect: (name: string) => void;
+  presets?: Preset[];
 }
 
-export function PresetSelector({ activePreset, onSelect }: PresetSelectorProps) {
+export function PresetSelector({ activePreset, onSelect, presets }: PresetSelectorProps) {
+  const items = presets ?? DEFAULT_PRESETS;
   return (
     <div>
-      <label className="block text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+      <label className="block text-xs font-semibold text-surface-600 uppercase tracking-wider mb-2">
         Preset
       </label>
       <div className="flex gap-2">
-        {PRESETS.map((p) => (
+        {items.map((p) => (
           <button
             key={p.name}
             onClick={() => onSelect(p.name)}
